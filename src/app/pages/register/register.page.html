@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registrarse</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="register-container">
+    <h2>Crear Cuenta</h2>
+
+    <div class="error" *ngIf="error">{{ error }}</div>
+    <div id="mensaje" *ngIf="mensaje">{{ mensaje }}</div>
+
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+      <ion-item>
+        <ion-input
+          type="text"
+          placeholder="Usuario"
+          [(ngModel)]="username"
+          name="username"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          type="password"
+          placeholder="Contraseña"
+          [(ngModel)]="password"
+          name="password"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit">Registrar</ion-button>
+    </form>
+
+    <p>
+      <a [routerLink]="['/login']">Ya tengo cuenta</a>
+    </p>
+  </div>
+</ion-content>

@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Panel de Administración</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="admin-container">
+
+    <div *ngIf="message" [ngClass]="messageType" class="message">{{ message }}</div>
+
+    <!-- Usuarios Activos -->
+    <h3>Usuarios Activos</h3>
+    <ion-list>
+      <ion-item *ngFor="let user of activeUsers">
+        <ion-label [ngClass]="{'role-admin': user.role==='admin','role-user': user.role==='user'}">
+          {{ user.username }} ({{ user.role }})
+        </ion-label>
+        <ion-button *ngIf="user.role!=='admin'" fill="outline" color="danger" size="small" (click)="toggleUser(user.username, false)">
+          Desactivar
+        </ion-button>
+        <ion-button *ngIf="user.role!=='admin'" fill="outline" color="tertiary" size="small" (click)="deleteUser(user.username)">
+          Eliminar
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <!-- Usuarios Desactivados -->
+    <h3>Usuarios Desactivados</h3>
+    <ion-list>
+      <ion-item *ngFor="let user of inactiveUsers">
+        <ion-label [ngClass]="{'role-admin': user.role==='admin','role-user': user.role==='user'}">
+          {{ user.username }} ({{ user.role }})
+        </ion-label>
+        <ion-button *ngIf="user.role!=='admin'" fill="outline" color="success" size="small" (click)="toggleUser(user.username, true)">
+          Activar
+        </ion-button>
+        <ion-button *ngIf="user.role!=='admin'" fill="outline" color="tertiary" size="small" (click)="deleteUser(user.username)">
+          Eliminar
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <div style="text-align:center; margin-top:20px;">
+      <ion-button color="medium" fill="clear" (click)="logout()">Cerrar sesión</ion-button>
+    </div>
+  </div>
+</ion-content>

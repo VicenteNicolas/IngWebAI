@@ -1,0 +1,122 @@
+.admin-container {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #fff; /* texto claro */
+  background: rgba(30, 30, 40, 0.8); /* fondo oscuro semitransparente */
+  backdrop-filter: blur(12px); /* efecto blur */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* sombra más intensa sobre fondo oscuro */
+
+  .message {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.4s forwards;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+    &.success {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+      border: 1px solid rgba(76, 175, 80, 0.4);
+    }
+
+    &.error {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: #f44336;
+      border: 1px solid rgba(244, 67, 54, 0.4);
+    }
+  }
+
+  h3 {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #ffffff; /* dorado similar al login */
+    border-bottom: 2px solid rgba(250, 250, 250, 0.514);
+    padding-bottom: 0.3rem;
+  }
+
+  ion-list {
+    background: rgba(50,50,60,0.7); /* fondo oscuro para listas */
+    border-radius: 10px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+    padding: 0.25rem 0;
+    margin-bottom: 2rem;
+  }
+
+  ion-item {
+    --background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.25s ease;
+    cursor: default;
+
+    &:hover {
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    ion-label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+
+      &.role-admin {
+        color: #ff6f61; /* rojo/naranja vibrante para admin */
+      }
+
+      &.role-user {
+        color: #03afff; /* azul vivo para user */
+      }
+    }
+
+    ion-button {
+      font-size: 0.85rem;
+      min-width: 90px;
+      margin-left: 0.5rem;
+      border-radius: 24px;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-transform: none;
+
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  > div[style] {
+    margin-top: 2rem;
+    text-align: center;
+
+    ion-button {
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 24px;
+      padding: 0 1.5rem;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: color 0.3s ease, background 0.3s ease;
+
+      &:hover {
+        color: #ff7e57; /* dorado al pasar el mouse */
+        background: rgba(255,221,87,0.1);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

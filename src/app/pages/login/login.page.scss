@@ -1,0 +1,121 @@
+/* Variables */
+$primary-color: #6a11cb;
+$secondary-color: #2575fc;
+$bg-gradient: linear-gradient(135deg, $primary-color, $secondary-color);
+$input-bg: rgba(255, 255, 255, 0.1);
+$input-border: rgba(255, 255, 255, 0.3);
+$btn-color: #fff;
+$btn-bg: #ff4b2b;
+$btn-bg-hover: #ff416c;
+$transition-speed: 0.3s;
+
+/* Estilos globales */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: $bg-gradient;
+  animation: bgMove 15s ease infinite;
+}
+
+.center-wrapper {
+  position: fixed;  /* Se mantiene siempre centrado en pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Contenedor del login */
+.login-container {
+  position: fixed;   
+  top: 50%;         
+  left: 50%;         
+  transform: translate(-50%, -50%); 
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 40px 30px;
+  width: 350px;
+  min-height: 400px;
+
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Título */
+.login-container h1 {
+  color: #fff;
+  margin-bottom: 30px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* Inputs */
+.login-container input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid $input-border;
+  border-radius: 50px;
+  background: $input-bg;
+  color: #fff;
+  font-size: 14px;
+  transition: all $transition-speed;
+}
+
+.login-container input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-container input:focus {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+
+/* Botón */
+.login-container button {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 50px;
+  background: $btn-bg;
+  color: $btn-color;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all $transition-speed;
+}
+
+.login-container button:hover {
+  background: $btn-bg-hover;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Efecto dinámico al pasar el mouse */
+.login-container input:hover, .login-container button:hover {
+  filter: brightness(1.1);
+}
