@@ -3,7 +3,9 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+
+
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     FormsModule,
     CommonModule,
     RouterModule,
-    HttpClientModule
   ]
 })
 export class RegisterPage {
@@ -24,39 +25,39 @@ export class RegisterPage {
   error = '';
   mensaje = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   register() {
+    this.error = '';
+    this.mensaje = '';
+
     if (!this.username || !this.password) {
       this.error = 'Debes completar todos los campos';
       this.mensaje = '';
       return;
     }
 
-    this.http.post<any>('http://localhost:3000/api/auth/register', {
-      username: this.username,
-      password: this.password
-    }).subscribe(
-      data => {
-        if (data.success) {
-          this.mensaje = 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.';
-          this.error = '';
-          this.username = '';
-          this.password = '';
-
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000);
-        } else {
-          this.error = data.message || 'Error al registrar';
+    this.authService.register({ username: this.username, password: this.password })
+      .subscribe({
+        next: data => {
+          if (data.success) {
+            this.mensaje = 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.';
+            this.error = '';
+            this.username = '';
+            this.password = '';
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 2000);
+          } else {
+            this.error = data.message || 'Error al registrar';
+            this.mensaje = '';
+          }
+        },
+        error: err => {
+          console.error(err);
+          this.error = 'Error de conexión';
           this.mensaje = '';
         }
-      },
-      err => {
-        console.error(err);
-        this.error = 'Error de conexión';
-        this.mensaje = '';
-      }
-    );
+      });
   }
 }

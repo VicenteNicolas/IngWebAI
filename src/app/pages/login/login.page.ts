@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     FormsModule,
     CommonModule,
     RouterModule,
-    HttpClientModule
   ]
 })
 export class LoginPage {
@@ -24,38 +23,42 @@ export class LoginPage {
   error = '';
   mensaje = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ionViewWillEnter() {
+    this.username = '';
+    this.password = '';
+    this.error = '';
+    this.mensaje = '';
+  }
 
   login() {
     this.error = '';
     this.mensaje = '';
-    
+
+
     if (!this.username || !this.password) {
       this.error = 'Por favor completa todos los campos';
+      this.mensaje = '';
       return;
     }
 
-    this.http.post<any>('http://localhost:3000/api/auth/login', {
-      username: this.username,
-      password: this.password
-    }, { withCredentials: true })  
-    .subscribe(
-      data => {
-        if (data.success) {
-          localStorage.setItem('user', JSON.stringify({ username: this.username, role: data.role }));
-
-          if (data.role === 'admin') {
-            this.router.navigate(['/admin']);
+    this.authService.login({ username: this.username, password: this.password })
+      .subscribe({
+        next: data => {
+          if (data.success) {
+            localStorage.setItem('user', JSON.stringify({ username: this.username, role: data.role }));
+            this.router.navigate([data.role === 'admin' ? '/admin' : '/home']);
+            this.error = '';
+            this.mensaje = '';
           } else {
-            this.router.navigate(['/inicio']);
+            this.error = data.message || 'Usuario o contraseña incorrectos';
           }
-        } else {
-          this.error = data.message || 'Usuario o contraseña incorrectos';
+        },
+        error: err => {
+          console.error(err);
+          this.error = 'Error de conexión';
         }
-      },
-      err => {
-        this.error = 'Error al conectar con el servidor';
-      }
-    );
+      });
   }
 }

@@ -1,14 +1,17 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './guards/admin-guard';
+import { AuthGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
+    canActivate: [AuthGuard]
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -26,3 +29,9 @@ export const routes: Routes = [
   },
   
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })], 
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}

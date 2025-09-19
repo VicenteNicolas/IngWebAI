@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
+import { AdminService } from '../../services/admin.service';
 
 interface User {
   username: string;
@@ -15,7 +15,7 @@ interface User {
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule, RouterModule]
+  imports: [IonicModule, CommonModule, RouterModule]
 })
 export class AdminPage implements OnInit {
 
@@ -24,7 +24,7 @@ export class AdminPage implements OnInit {
   message = '';
   messageType: 'success' | 'error' = 'success';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private adminService: AdminService, private router: Router) {}
 
   ngOnInit() {
     this.loadUsers();
@@ -37,10 +37,7 @@ export class AdminPage implements OnInit {
   }
 
   loadUsers() {
-    this.http.get<{ success: boolean, users: User[] }>(
-      'http://localhost:3000/admin/users',
-      { withCredentials: true }  
-    ).subscribe({
+    this.adminService.getUsers().subscribe({
       next: data => {
         if (!data.success) return this.showMessage('Error al cargar usuarios', 'error');
         this.activeUsers = data.users.filter(u => u.activo == 1);
@@ -54,12 +51,7 @@ export class AdminPage implements OnInit {
   }
 
   toggleUser(username: string, activate: boolean) {
-    const url = `http://localhost:3000/admin/${activate ? 'activate' : 'deactivate'}/${username}`;
-    this.http.put<{ success: boolean, message?: string }>(
-      url,
-      {},
-      { withCredentials: true } 
-    ).subscribe({
+    this.adminService.toggleUser(username, activate).subscribe({
       next: data => {
         if (data.success) {
           this.showMessage(`Usuario "${username}" ${activate ? 'activado' : 'desactivado'}`);
@@ -76,10 +68,7 @@ export class AdminPage implements OnInit {
   deleteUser(username: string) {
     if (!confirm(`¿Seguro que quieres eliminar al usuario "${username}"?`)) return;
 
-    this.http.delete<{ success: boolean, message?: string }>(
-      `http://localhost:3000/admin/delete/${username}`,
-      { withCredentials: true }  
-    ).subscribe({
+    this.adminService.deleteUser(username).subscribe({
       next: data => {
         if (data.success) {
           this.showMessage(`Usuario "${username}" eliminado`);

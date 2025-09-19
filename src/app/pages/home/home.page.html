@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Home</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        Cerrar sesión
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar placeholder="Buscar"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2 class="title">Instalaciones Disponibles:</h2>
+
+  <ion-card *ngFor="let item of instalaciones">
+    <ion-card-content>
+      <div class="card-container">
+        <div class="img-placeholder"></div>
+        <div class="info">
+          <h3>{{ item.nombre }}</h3>
+          <p><strong>Tarifa de arriendo:</strong></p>
+          <ul>
+            <li *ngFor="let detalle of item.detalles">{{ detalle }}</li>
+          </ul>
+          <ion-button expand="block" size="small" fill="outline">
+            Reservar
+          </ion-button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
