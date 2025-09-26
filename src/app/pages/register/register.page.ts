@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
-
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -21,7 +19,14 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterPage {
   username = '';
+  rut = '';
+  email = '';
+  region = '';
+  comuna = '';
   password = '';
+  confirmPassword = '';
+  termsAccepted = false;
+
   error = '';
   mensaje = '';
 
@@ -31,33 +36,57 @@ export class RegisterPage {
     this.error = '';
     this.mensaje = '';
 
-    if (!this.username || !this.password) {
+    // Validaciones
+    if (!this.username || !this.rut || !this.email || !this.region || !this.comuna || !this.password || !this.confirmPassword) {
       this.error = 'Debes completar todos los campos';
-      this.mensaje = '';
       return;
     }
 
-    this.authService.register({ username: this.username, password: this.password })
-      .subscribe({
-        next: data => {
-          if (data.success) {
-            this.mensaje = 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.';
-            this.error = '';
-            this.username = '';
-            this.password = '';
-            setTimeout(() => {
-              this.router.navigate(['/login']);
-            }, 2000);
-          } else {
-            this.error = data.message || 'Error al registrar';
-            this.mensaje = '';
-          }
-        },
-        error: err => {
-          console.error(err);
-          this.error = 'Error de conexión';
-          this.mensaje = '';
+    if (this.password !== this.confirmPassword) {
+      this.error = 'Las contraseñas no coinciden';
+      return;
+    }
+
+    if (!this.termsAccepted) {
+      this.error = 'Debes aceptar los términos y condiciones';
+      return;
+    }
+
+    this.authService.register({
+      username: this.username,
+      password: this.password,
+      rut: this.rut,
+      email: this.email,
+      region: this.region,
+      comuna: this.comuna
+    }).subscribe({
+      next: data => {
+        if (data.success) {
+          this.mensaje = 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.';
+          this.error = '';
+          this.resetForm();
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.error = data.message || 'Error al registrar';
         }
-      });
+      },
+      error: err => {
+        console.error(err);
+        this.error = 'Error de conexión';
+      }
+    });
+  }
+
+  private resetForm() {
+    this.username = '';
+    this.rut = '';
+    this.email = '';
+    this.region = '';
+    this.comuna = '';
+    this.password = '';
+    this.confirmPassword = '';
+    this.termsAccepted = false;
   }
 }

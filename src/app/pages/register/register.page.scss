@@ -10,11 +10,8 @@ $btn-bg-hover: #45a049;
 $transition-speed: 0.3s;
 
 /* Fondo animado */
-body, html {
+ion-content {
   height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: $bg-gradient;
   animation: bgMove 15s ease infinite;
 }
@@ -27,11 +24,6 @@ body, html {
 
 /* Contenedor de registro */
 .register-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,48 +35,61 @@ body, html {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   padding: 50px 40px;
   width: 400px;
-  min-height: 500px;
+  max-width: 90%;
+  min-height: 600px;
 
+  margin: 50px auto;
   animation: fadeIn 1s ease;
 }
 
 /* Título */
-.register-container h1 {
+.register-container h2 {
   color: #fff;
   margin-bottom: 30px;
   text-align: center;
   letter-spacing: 1px;
 }
 
-/* Inputs */
-.register-container input {
+/* Error y mensaje */
+.register-container .error,
+.register-container #mensaje {
   width: 100%;
-  padding: 14px 18px;
-  margin-bottom: 20px;
-  border-radius: 50px;
-  border: 1px solid $input-border;
-  background: $input-bg;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #ff4d4d;
+}
+
+.register-container #mensaje {
+  color: #4caf50;
+}
+
+/* Ion-item y input */
+.register-container ion-item {
+  margin-bottom: 15px;
+  --background: $input-bg;
+  --border-radius: 50px;
+  --highlight-color-focused: #fff;
+}
+
+.register-container ion-input {
   color: #fff;
   font-size: 14px;
-  transition: all $transition-speed;
 }
 
-.register-container input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+.register-container ion-label {
+  color: #fff;
 }
 
-.register-container input:focus {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.15);
-  outline: none;
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+/* Checkbox */
+.register-container ion-checkbox {
+  --background: $input-bg;
+  margin-right: 10px;
 }
 
 /* Botón de registro */
-.register-container button {
+.register-container ion-button {
   width: 100%;
-  padding: 14px 0;
-  border: none;
   border-radius: 50px;
   background: $btn-bg;
   color: $btn-color;
@@ -94,13 +99,20 @@ body, html {
   transition: all $transition-speed;
 }
 
-.register-container button:hover {
+.register-container ion-button:hover {
   background: $btn-bg-hover;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* Efecto hover en inputs y botón */
-.register-container input:hover, .register-container button:hover {
+/* Efecto hover */
+.register-container ion-input:hover,
+.register-container ion-button:hover {
   filter: brightness(1.1);
+}
+
+/* Animación fadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
