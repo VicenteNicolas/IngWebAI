@@ -8,63 +8,167 @@
   <div class="register-container">
     <h2>Crear Cuenta</h2>
 
-    <div class="error" *ngIf="error">{{ error }}</div>
-    <div id="mensaje" *ngIf="mensaje">{{ mensaje }}</div>
+    <!-- Mensajes de error/éxito -->
+    <ion-text color="danger" class="error-message" *ngIf="error">
+      {{ error }}
+    </ion-text>
+    <ion-text color="success" class="success-message" *ngIf="mensaje">
+      {{ mensaje }}
+    </ion-text>
 
     <form (ngSubmit)="register()" #registerForm="ngForm">
+      <div class="form-fields">
+        <!-- Columna 1 -->
+        <div class="field-column">
+          <ion-item>
+            <ion-label position="floating">Usuario</ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Usuario (mín. 3 chars)" 
+              [(ngModel)]="username" 
+              name="username" 
+              required 
+              minlength="3"
+              #usernameInput="ngModel"
+              clearable="true">
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger" size="small" *ngIf="usernameInput.invalid && usernameInput.touched">
+            Usuario requerido (mín. 3 caracteres)
+          </ion-text>
 
-      <ion-item>
-        <ion-input type="text" placeholder="Usuario"
-          [(ngModel)]="username" name="username" required>
-        </ion-input>
-      </ion-item>
+          <ion-item>
+            <ion-label position="floating">RUT</ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="RUT (ej. 12.345.678-9)" 
+              [(ngModel)]="rut" 
+              name="rut" 
+              required
+              #rutInput="ngModel"
+              clearable="true">
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger" size="small" *ngIf="rutInput.invalid && rutInput.touched">
+            RUT requerido
+          </ion-text>
 
-      <ion-item>
-        <ion-input type="text" placeholder="RUT"
-          [(ngModel)]="rut" name="rut" required>
-        </ion-input>
-      </ion-item>
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input 
+              type="email" 
+              placeholder="Correo electrónico" 
+              [(ngModel)]="email" 
+              name="email" 
+              required 
+              email
+              #emailInput="ngModel"
+              clearable="true">
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger" size="small" *ngIf="emailInput.invalid && emailInput.touched">
+            Email inválido
+          </ion-text>
+        </div>
 
-      <ion-item>
-        <ion-input type="email" placeholder="Correo electrónico"
-          [(ngModel)]="email" name="email" required>
-        </ion-input>
-      </ion-item>
+        <!-- Columna 2 -->
+        <div class="field-column">
+          <!-- Región -->
+          <ion-item>
+            <ion-label position="floating">Región</ion-label>
+            <ion-select 
+              [(ngModel)]="region" 
+              name="region" 
+              required 
+              (ionChange)="onRegionChange()"
+              #regionInput="ngModel"
+              interface="popover">
+              <ion-select-option *ngFor="let reg of regiones" [value]="reg">
+                {{ reg }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-text color="danger" size="small" *ngIf="regionInput.invalid && regionInput.touched">
+            Región requerida
+          </ion-text>
 
-      <ion-item>
-        <ion-input type="text" placeholder="Región"
-          [(ngModel)]="region" name="region" required>
-        </ion-input>
-      </ion-item>
+          <!-- Comuna -->
+          <ion-item>
+            <ion-label position="floating">Comuna</ion-label>
+            <ion-select 
+              [(ngModel)]="comuna" 
+              name="comuna" 
+              required 
+              [disabled]="!region"
+              #comunaInput="ngModel"
+              interface="popover">
+              <ion-select-option *ngFor="let com of comunas" [value]="com">
+                {{ com }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-text color="danger" size="small" *ngIf="comunaInput.invalid && comunaInput.touched">
+            Comuna requerida
+          </ion-text>
 
-      <ion-item>
-        <ion-input type="text" placeholder="Comuna"
-          [(ngModel)]="comuna" name="comuna" required>
-        </ion-input>
-      </ion-item>
+          <!-- Password -->
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input 
+              type="password" 
+              placeholder="Contraseña (mín. 8 chars)" 
+              [(ngModel)]="password" 
+              name="password" 
+              required 
+              minlength="8"
+              #passwordInput="ngModel"
+              clearable="true">
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger" size="small" *ngIf="passwordInput.invalid && passwordInput.touched">
+            Contraseña requerida (mín. 8 caracteres)
+          </ion-text>
 
-      <ion-item>
-        <ion-input type="password" placeholder="Contraseña"
-          [(ngModel)]="password" name="password" required>
-        </ion-input>
-      </ion-item>
+          <!-- Confirmar Password -->
+          <ion-item>
+            <ion-label position="floating">Confirmar contraseña</ion-label>
+            <ion-input 
+              type="password" 
+              placeholder="Confirmar contraseña" 
+              [(ngModel)]="confirmPassword" 
+              name="confirmPassword" 
+              required
+              #confirmInput="ngModel"
+              clearable="true">
+            </ion-input>
+          </ion-item>
+          <ion-text color="danger" size="small" *ngIf="confirmInput.invalid && confirmInput.touched">
+            Confirmar contraseña requerida
+          </ion-text>
+        </div>
+      </div>
 
-      <ion-item>
-        <ion-input type="password" placeholder="Confirmar contraseña"
-          [(ngModel)]="confirmPassword" name="confirmPassword" required>
-        </ion-input>
-      </ion-item>
-
+      <!-- Checkbox -->
       <ion-item lines="none">
-        <ion-checkbox [(ngModel)]="termsAccepted" name="termsAccepted"></ion-checkbox>
-        <ion-label>Acepto los términos y condiciones</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="termsAccepted" name="termsAccepted" required></ion-checkbox>
+        <ion-label>Acepto los <a href="/terms" target="_blank">términos y condiciones</a></ion-label>
       </ion-item>
+      <ion-text color="danger" size="small" *ngIf="!termsAccepted && registerForm.submitted">
+        Debes aceptar los términos y condiciones
+      </ion-text>
 
-      <ion-button expand="block" type="submit">Registrar</ion-button>
+      <!-- Botón -->
+      <ion-button 
+        expand="block" 
+        type="submit"
+        [disabled]="isLoading || !registerForm.valid || !termsAccepted">
+        <ion-spinner *ngIf="isLoading" name="crescent" slot="start" color="light"></ion-spinner>
+        <ion-label>{{ isLoading ? 'Registrando...' : 'Registrar' }}</ion-label>
+      </ion-button>
     </form>
 
-    <p>
-      <a [routerLink]="['/login']">Ya tengo cuenta</a>
+    <p class="login-link">
+      <a routerLink="/login">Ya tengo cuenta</a>
     </p>
   </div>
 </ion-content>

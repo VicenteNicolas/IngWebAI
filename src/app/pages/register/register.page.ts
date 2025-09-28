@@ -19,6 +19,9 @@ import { RegisterRequest } from '../../models/user.model';
   ]
 })
 export class RegisterPage {
+
+  isLoading = false;
+
   username = '';
   rut = '';
   email = '';
@@ -31,7 +34,34 @@ export class RegisterPage {
   error = '';
   mensaje = '';
 
+  //Ahora esta feo, hay que arreglar esta parte a futuro para modularizarlo, pero por mientras sirve para
+
+  // Lista de regiones
+  regiones: string[] = [
+    'Región Metropolitana',
+    'Valparaíso',
+    'Biobío',
+    'Antofagasta'
+  ];
+
+  // Comunas agrupadas por región
+  comunasPorRegion: { [key: string]: string[] } = {
+    'Región Metropolitana': ['Santiago', 'Puente Alto', 'Las Condes', 'Maipú'],
+    'Valparaíso': ['Valparaíso', 'Viña del Mar', 'Quilpué', 'Villa Alemana'],
+    'Biobío': ['Concepción', 'Talcahuano', 'Coronel', 'Los Ángeles'],
+    'Antofagasta': ['Antofagasta', 'Calama', 'Mejillones']
+  };
+
+  // Lista actual de comunas según la región seleccionada
+  comunas: string[] = [];
+
   constructor(private authService: AuthService, private router: Router) {}
+
+  // Cuando cambia la región se actualizan las comunas
+  onRegionChange() {
+    this.comunas = this.comunasPorRegion[this.region] || [];
+    this.comuna = ''; 
+  }
 
   register() {
     this.error = '';
@@ -62,8 +92,12 @@ export class RegisterPage {
       comuna: this.comuna,
     };
 
+    this.isLoading = true;
+
     this.authService.register(userData).subscribe({
       next: data => {
+        this.isLoading = false;
+
         if (data.success) {
           this.mensaje = 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.';
           this.error = '';
@@ -76,6 +110,7 @@ export class RegisterPage {
         }
       },
       error: err => {
+        this.isLoading = false;
         console.error(err);
         this.error = 'Error de conexión';
       }
@@ -91,5 +126,6 @@ export class RegisterPage {
     this.password = '';
     this.confirmPassword = '';
     this.termsAccepted = false;
+    this.comunas = [];
   }
 }
