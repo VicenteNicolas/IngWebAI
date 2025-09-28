@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { RegisterRequest } from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -52,14 +53,16 @@ export class RegisterPage {
       return;
     }
 
-    this.authService.register({
+    const userData: RegisterRequest = {
       username: this.username,
       password: this.password,
       rut: this.rut,
       email: this.email,
       region: this.region,
-      comuna: this.comuna
-    }).subscribe({
+      comuna: this.comuna,
+    };
+
+    this.authService.register(userData).subscribe({
       next: data => {
         if (data.success) {
           this.mensaje = 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.';
