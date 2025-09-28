@@ -7,7 +7,8 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
-    canActivate: [AuthGuard]
+    //Desactivado para que se pueda ingresar sin validación
+    //canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -25,7 +26,8 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./pages/admin/admin.page').then( m => m.AdminPage),
-    canActivate: [AdminGuard]
+    //Desactivado para que se pueda ingresar sin validación
+    //canActivate: [AdminGuard]
   },
   
 ];

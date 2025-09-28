@@ -43,7 +43,19 @@ export class LoginPage {
       return;
     }
 
-    this.authService.login({ username: this.username, password: this.password })
+    //Esto fue implementado para que se pueda navegar entre paginas sin la conexion con el backend
+
+    localStorage.setItem('user',JSON.stringify({
+      username: this.username,
+      role: this.username === 'admin' ? 'admin' : 'user'
+    }));
+
+    this.router.navigate([this.username === 'admin' ? '/admin' : '/home']);
+
+
+    // Logica de conexión con backend 
+
+    /*this.authService.login({ username: this.username, password: this.password })
       .subscribe({
         next: data => {
           if (data.success) {
@@ -59,6 +71,8 @@ export class LoginPage {
           console.error(err);
           this.error = 'Error de conexión';
         }
-      });
+      });*/
+
+    
   }
 }
