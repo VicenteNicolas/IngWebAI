@@ -33,7 +33,7 @@
               clearable="true">
             </ion-input>
           </ion-item>
-          <ion-text color="danger" size="small" *ngIf="usernameInput.invalid && usernameInput.touched">
+          <ion-text color="danger" size="small" class="validation-error" *ngIf="usernameInput.invalid && usernameInput.touched">
             Usuario requerido (mín. 3 caracteres)
           </ion-text>
 
@@ -49,7 +49,7 @@
               clearable="true">
             </ion-input>
           </ion-item>
-          <ion-text color="danger" size="small" *ngIf="rutInput.invalid && rutInput.touched">
+          <ion-text color="danger" size="small" class="validation-error" *ngIf="rutInput.invalid && rutInput.touched">
             RUT requerido
           </ion-text>
 
@@ -66,7 +66,7 @@
               clearable="true">
             </ion-input>
           </ion-item>
-          <ion-text color="danger" size="small" *ngIf="emailInput.invalid && emailInput.touched">
+          <ion-text color="danger" size="small" class="validation-error" *ngIf="emailInput.invalid && emailInput.touched">
             Email inválido
           </ion-text>
         </div>
@@ -90,7 +90,7 @@
             </ion-select>
             <ion-spinner *ngIf="isLoadingRegions" slot="end" name="crescent"></ion-spinner>
           </ion-item>
-          <ion-text color="danger" size="small" *ngIf="regionInput.invalid && regionInput.touched">
+          <ion-text color="danger" size="small" class="validation-error" *ngIf="regionInput.invalid && regionInput.touched">
             Región requerida
           </ion-text>
 
@@ -110,7 +110,7 @@
             </ion-select>
             <ion-spinner *ngIf="isLoadingComunas" slot="end" name="crescent"></ion-spinner>
           </ion-item>
-          <ion-text color="danger" size="small" *ngIf="comunaInput.invalid && comunaInput.touched">
+          <ion-text color="danger" size="small" class="validation-error" *ngIf="comunaInput.invalid && comunaInput.touched">
             Comuna requerida
           </ion-text>
 
@@ -128,7 +128,7 @@
               clearable="true">
             </ion-input>
           </ion-item>
-          <ion-text color="danger" size="small" *ngIf="passwordInput.invalid && passwordInput.touched">
+          <ion-text color="danger" size="small" class="validation-error" *ngIf="passwordInput.invalid && passwordInput.touched">
             Contraseña requerida (mín. 8 caracteres)
           </ion-text>
 
@@ -145,7 +145,7 @@
               clearable="true">
             </ion-input>
           </ion-item>
-          <ion-text color="danger" size="small" *ngIf="confirmInput.invalid && confirmInput.touched">
+          <ion-text color="danger" size="small" class="validation-error" *ngIf="confirmInput.invalid && confirmInput.touched">
             Confirmar contraseña requerida
           </ion-text>
         </div>

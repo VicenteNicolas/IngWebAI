@@ -36,18 +36,15 @@ export class LoginPage {
     this.error = '';
     this.mensaje = '';
 
-
     if (!this.username || !this.password) {
       this.error = 'Por favor completa todos los campos';
-      this.mensaje = '';
       return;
     }
 
     this.authService.login({ username: this.username, password: this.password })
       .subscribe({
         next: data => {
-          if (data.success) {
-            localStorage.setItem('user', JSON.stringify({ username: this.username, role: data.role }));
+          if (data.success && data.token) {
             this.router.navigate([data.role === 'admin' ? '/admin' : '/home']);
             this.error = '';
             this.mensaje = '';
@@ -60,7 +57,5 @@ export class LoginPage {
           this.error = 'Error de conexión';
         }
       });
-
-    
   }
 }

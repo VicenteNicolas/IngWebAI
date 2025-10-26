@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
+import { AuthService } from '../../services/auth.service';  
 
 interface User {
   username: string;
@@ -24,10 +25,24 @@ export class AdminPage implements OnInit {
   message = '';
   messageType: 'success' | 'error' = 'success';
 
-  constructor(private adminService: AdminService, private router: Router) {}
+  constructor(private adminService: AdminService, private authService: AuthService, private router: Router) {}  
 
   ngOnInit() {
-    this.loadUsers();
+    // Verificar sesión y role antes de cargar datos
+    this.authService.session().subscribe({
+      next: (data) => {
+        if (!data.success || data.user.role !== 'admin') {
+          this.router.navigate(['/login']);  
+        } else {
+          this.loadUsers();  
+        }
+      },
+      error: (err) => {
+        console.error('Error en sesión:', err);
+        this.showMessage('Error de conexión', 'error');
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   showMessage(msg: string, type: 'success' | 'error' = 'success') {
@@ -83,7 +98,7 @@ export class AdminPage implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('user'); 
+    this.authService.logout(); 
     this.router.navigate(['/login']);
   }
 }

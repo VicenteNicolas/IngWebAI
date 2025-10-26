@@ -33,7 +33,7 @@ ion-content {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   padding: 60px 30px; /* Más padding horizontal/vertical */
   width: 90%;
-  max-width: 550px; /* Aumento ancho para columnas */
+  max-width: 600px; /* Aumento ancho para columnas */
   margin: 20px auto;
   animation: fadeIn 1s ease;
 }
@@ -89,11 +89,22 @@ ion-content {
 }
 
 .register-container ion-item {
-  margin-bottom: 40px; 
+  margin-bottom: 35px; 
   --background: $input-bg;
   --border-radius: 50px;
   --highlight-color-focused: #fff;
   transition: all $transition-speed;
+}
+
+
+.register-container .validation-error {
+  display: block; 
+  text-align: left;
+  padding-left: 16px;
+  margin-bottom: 30px; 
+  margin-top: -30px; 
+  font-size: 15px; 
+  font-weight: normal; 
 }
 
 .register-container ion-item:last-child { 
@@ -105,6 +116,7 @@ ion-content {
   color: #fff;
   font-size: 14px;
   padding: 15px; 
+
 }
 
 .register-container ion-label {
