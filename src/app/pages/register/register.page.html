@@ -16,7 +16,7 @@
       {{ mensaje }}
     </ion-text>
 
-    <form (ngSubmit)="register()" #registerForm="ngForm">
+    <form (ngSubmit)="register(registerForm)" #registerForm="ngForm">
       <div class="form-fields">
         <!-- Columna 1 -->
         <div class="field-column">
@@ -77,16 +77,18 @@
           <ion-item>
             <ion-label position="floating">Región</ion-label>
             <ion-select 
-              [(ngModel)]="region" 
+              [(ngModel)]="selectedRegion" 
               name="region" 
               required 
               (ionChange)="onRegionChange()"
               #regionInput="ngModel"
-              interface="popover">
+              interface="popover"
+              [disabled]="isLoadingRegions">
               <ion-select-option *ngFor="let reg of regiones" [value]="reg">
-                {{ reg }}
+                {{ reg.name }}
               </ion-select-option>
             </ion-select>
+            <ion-spinner *ngIf="isLoadingRegions" slot="end" name="crescent"></ion-spinner>
           </ion-item>
           <ion-text color="danger" size="small" *ngIf="regionInput.invalid && regionInput.touched">
             Región requerida
@@ -96,16 +98,17 @@
           <ion-item>
             <ion-label position="floating">Comuna</ion-label>
             <ion-select 
-              [(ngModel)]="comuna" 
+              [(ngModel)]="selectedComuna" 
               name="comuna" 
               required 
-              [disabled]="!region"
+              [disabled]="!selectedRegion || isLoadingComunas" 
               #comunaInput="ngModel"
               interface="popover">
               <ion-select-option *ngFor="let com of comunas" [value]="com">
-                {{ com }}
+                {{ com.name }}
               </ion-select-option>
             </ion-select>
+            <ion-spinner *ngIf="isLoadingComunas" slot="end" name="crescent"></ion-spinner>
           </ion-item>
           <ion-text color="danger" size="small" *ngIf="comunaInput.invalid && comunaInput.touched">
             Comuna requerida

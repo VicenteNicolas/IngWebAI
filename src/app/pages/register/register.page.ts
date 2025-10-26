@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { LocationService } from '../../services/location.service';  
 import { RegisterRequest } from '../../models/user.model';
+import { Region, Comuna } from '../../models/location.model';  
 
 @Component({
   selector: 'app-register',
@@ -18,15 +20,17 @@ import { RegisterRequest } from '../../models/user.model';
     RouterModule,
   ]
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit {
 
   isLoading = false;
+  isLoadingRegions = false;  
+  isLoadingComunas = false;  
 
   username = '';
   rut = '';
   email = '';
-  region = '';
-  comuna = '';
+  selectedRegion: Region | null = null;  
+  selectedComuna: Comuna | null = null;  
   password = '';
   confirmPassword = '';
   termsAccepted = false;
@@ -34,41 +38,59 @@ export class RegisterPage {
   error = '';
   mensaje = '';
 
-  //Ahora esta feo, hay que arreglar esta parte a futuro para modularizarlo, pero por mientras sirve para
+  regiones: Region[] = [];
+  comunas: Comuna[] = [];
 
-  // Lista de regiones
-  regiones: string[] = [
-    'Región Metropolitana',
-    'Valparaíso',
-    'Biobío',
-    'Antofagasta'
-  ];
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private locationService: LocationService 
+  ) {}
 
-  // Comunas agrupadas por región
-  comunasPorRegion: { [key: string]: string[] } = {
-    'Región Metropolitana': ['Santiago', 'Puente Alto', 'Las Condes', 'Maipú'],
-    'Valparaíso': ['Valparaíso', 'Viña del Mar', 'Quilpué', 'Villa Alemana'],
-    'Biobío': ['Concepción', 'Talcahuano', 'Coronel', 'Los Ángeles'],
-    'Antofagasta': ['Antofagasta', 'Calama', 'Mejillones']
-  };
-
-  // Lista actual de comunas según la región seleccionada
-  comunas: string[] = [];
-
-  constructor(private authService: AuthService, private router: Router) {}
-
-  // Cuando cambia la región se actualizan las comunas
-  onRegionChange() {
-    this.comunas = this.comunasPorRegion[this.region] || [];
-    this.comuna = ''; 
+  ngOnInit() {
+    this.loadRegions();
   }
 
-  register() {
+  private loadRegions() {
+    this.isLoadingRegions = true;
+    this.locationService.getRegions().subscribe({
+      next: data => {
+        this.regiones = data;
+        this.isLoadingRegions = false;
+      },
+      error: err => {
+        this.isLoadingRegions = false;
+        this.error = err.message || 'Error al cargar regiones';
+      }
+    });
+  }
+
+  onRegionChange() {
+    if (!this.selectedRegion) {
+      this.comunas = [];
+      this.selectedComuna = null;
+      return;
+    }
+
+    this.isLoadingComunas = true;
+    this.selectedComuna = null;
+    this.locationService.getComunas(this.selectedRegion.id).subscribe({
+      next: data => {
+        this.comunas = data;
+        this.isLoadingComunas = false;
+      },
+      error: err => {
+        this.isLoadingComunas = false;
+        this.error = err.message || 'Error al cargar comunas';
+      }
+    });
+  }
+
+  register(registerForm: NgForm) {
     this.error = '';
     this.mensaje = '';
 
-    // Validaciones
-    if (!this.username || !this.rut || !this.email || !this.region || !this.comuna || !this.password || !this.confirmPassword) {
+    if (!this.username || !this.rut || !this.email || !this.selectedRegion || !this.selectedComuna || !this.password || !this.confirmPassword) {
       this.error = 'Debes completar todos los campos';
       return;
     }
@@ -88,23 +110,21 @@ export class RegisterPage {
       password: this.password,
       rut: this.rut,
       email: this.email,
-      region: this.region,
-      comuna: this.comuna,
+      regionId: this.selectedRegion.id,
+      comunaId: this.selectedComuna.id,
     };
 
     this.isLoading = true;
-
     this.authService.register(userData).subscribe({
       next: data => {
         this.isLoading = false;
-
         if (data.success) {
           this.mensaje = 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.';
-          this.error = '';
-          this.resetForm();
+          this.resetForm(registerForm);
           setTimeout(() => {
-            this.router.navigate(['/login']);
+            this.mensaje = '';
           }, 2000);
+          setTimeout(() => this.router.navigate(['/login']), 2000);
         } else {
           this.error = data.message || 'Error al registrar';
         }
@@ -117,15 +137,16 @@ export class RegisterPage {
     });
   }
 
-  private resetForm() {
+  private resetForm(form?: NgForm) {
     this.username = '';
     this.rut = '';
     this.email = '';
-    this.region = '';
-    this.comuna = '';
+    this.selectedRegion = null;
+    this.selectedComuna = null;
     this.password = '';
     this.confirmPassword = '';
     this.termsAccepted = false;
     this.comunas = [];
+    if (form) form.resetForm();
   }
 }
