@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "5911e6f7-3873-4ec8-90b2-44bfbacd6920",
+		"name": "EP2 Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49551101"
+	},
+	"item": [
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjE0NDg1NjcsImV4cCI6MTc2MTQ1NTc2N30.RcyLtg73CVbdIwRffk3Ztf_tkiRi2CwnVkguWTROM3A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"titocalderon\",\r\n  \"password\": \"1234678\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjE0NDg1NjcsImV4cCI6MTc2MTQ1NTc2N30.RcyLtg73CVbdIwRffk3Ztf_tkiRi2CwnVkguWTROM3A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"titocalderon\",\r\n  \"rut\": \"15.117.591-1\",\r\n  \"email\": \"usuario1@example.com\",\r\n  \"regionId\": \"6\",\r\n  \"comunaId\": \"5101\",\r\n  \"password\": \"1234678\",\r\n  \"rol\": \"user\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
