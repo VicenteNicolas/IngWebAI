@@ -25,8 +25,17 @@ Los usuarios registrados se crean con rol "usuario".
 
 Para crear un administrador, ejecutar este comando SQL en la base de datos:
 
-INSERT INTO usuarios (username, password, role, activo)
-VALUES ('admin', '$2b$12$uMxJdtlqdSgOxm4mwz8WAOsHMshCyvwmRGAcgdVUEAla6YzENPX06', 'admin', 1);
+INSERT INTO usuarios (username, password, rut, email, region_id, comuna_id, role, activo)
+VALUES (
+  'vic',
+  '$2b$12$uMxJdtlqdSgOxm4mwz8WAOsHMshCyvwmRGAcgdVUEAla6YzENPX06',
+  '00000000-0',
+  'admin@admin.cl',
+  1,
+  1,
+  'admin',
+  1
+);
 
 La contraseña de este usuario es: admin123
 
