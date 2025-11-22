@@ -1,0 +1,209 @@
+// Header con imagen de fondo
+.profile-header {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  z-index: 0;
+}
+
+// Avatar container
+.avatar-container {
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.avatar-letter {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+// Información del usuario
+.user-info {
+  text-align: center;
+  padding: 20px 16px 10px;
+}
+
+.user-name {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--ion-color-dark);
+}
+
+.role-chip {
+  height: 28px;
+  font-size: 0.85rem;
+  
+  ion-icon {
+    margin-right: 4px;
+  }
+}
+
+// Estadísticas
+.stats-grid {
+  padding: 20px 12px;
+  margin-bottom: 10px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  ion-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    margin: 8px 0 4px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--ion-color-medium);
+    font-weight: 500;
+  }
+}
+
+// Secciones de perfil
+.profile-sections {
+  padding: 0 16px 20px;
+}
+
+.section-list {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+
+  ion-list-header {
+    padding: 16px 16px 8px;
+    
+    ion-label {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  ion-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --inner-padding-end: 8px;
+    --min-height: 70px;
+    margin: 4px 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      --background: rgba(var(--ion-color-primary-rgb), 0.05);
+    }
+
+    ion-icon {
+      font-size: 24px;
+      margin-right: 16px;
+    }
+
+    h3 {
+      margin: 0 0 4px 0;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--ion-color-dark);
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--ion-color-medium);
+    }
+
+    ion-toggle {
+      --handle-width: 20px;
+      --handle-height: 20px;
+    }
+  }
+}
+
+// Botón de cerrar sesión
+.logout-container {
+  padding: 20px 0;
+}
+
+.logout-btn {
+  --border-radius: 12px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  font-weight: 600;
+  text-transform: none;
+
+  ion-icon {
+    margin-right: 8px;
+  }
+}
+
+// Responsive
+@media (min-width: 768px) {
+  .stats-grid {
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-sections {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

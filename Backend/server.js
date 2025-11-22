@@ -9,10 +9,21 @@ const locationRoutes = require('./routes/location');
 
 const app = express();
 
-// CORS
+const allowedOrigins = ['http://localhost:8100', 'http://localhost'];
+
 app.use(cors({
-  origin: 'http://localhost:8100', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log("Origen bloqueado por CORS:", origin);
+      callback(new Error('No permitido por CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization'], 
   credentials: true
 }));
 
@@ -20,8 +31,8 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 // Rutas
-app.use('/api/auth', authRoutes);       // Auth con JWT
-app.use('/api/admin', adminRoutes);         // Admin con JWT
-app.use('/api', locationRoutes);        
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api', locationRoutes);
 
 app.listen(3000, () => console.log('Servidor corriendo en http://localhost:3000'));

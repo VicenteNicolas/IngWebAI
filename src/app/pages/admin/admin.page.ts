@@ -1,9 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { AuthService } from '../../services/auth.service';  
+import { 
+  IonHeader, 
+  IonToolbar, 
+  IonTitle, 
+  IonContent, 
+  IonList,
+  IonItem,
+  IonLabel,
+  IonButton,
+  IonIcon,
+  IonToggle,      
+  IonListHeader,
+  IonNote,
+  IonBadge       
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons'; 
+import { trash, person, power, create } from 'ionicons/icons';
 
 interface User {
   username: string;
@@ -16,7 +32,25 @@ interface User {
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, RouterModule]
+  imports: [
+    // Componentes Ionic porque me daba error con el docker
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonContent, 
+    IonList,
+    IonItem,
+    IonLabel,
+    IonButton,
+    IonIcon,
+    IonToggle,
+    IonListHeader,
+    IonNote,
+    IonBadge,
+    // Angular
+    CommonModule, 
+    RouterModule
+  ]
 })
 export class AdminPage implements OnInit {
 
@@ -25,10 +59,11 @@ export class AdminPage implements OnInit {
   message = '';
   messageType: 'success' | 'error' = 'success';
 
-  constructor(private adminService: AdminService, private authService: AuthService, private router: Router) {}  
+  constructor(private adminService: AdminService, private authService: AuthService, private router: Router) {
+    addIcons({ trash, person, power, create });
+  }  
 
   ngOnInit() {
-    // Verificar sesión y role antes de cargar datos
     this.authService.session().subscribe({
       next: (data) => {
         if (!data.success || data.user.role !== 'admin') {

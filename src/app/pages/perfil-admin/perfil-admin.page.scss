@@ -1,0 +1,50 @@
+ion-content {
+  // 1. Centrar todo el contenido dentro del ion-content
+  --padding-start: 20px;
+  --padding-end: 20px;
+  
+  // Usamos Flexbox en el contenido para centrar verticalmente si fuera necesario, 
+  // pero principalmente lo usamos para centrar horizontalmente.
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos a lo largo del eje X (horizontal) */
+}
+
+/* 2. Estilos para los elementos centrados */
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--ion-color-primary, #3880ff); // Fondo del ícono
+}
+
+.avatar ion-icon {
+  font-size: 50px;
+  color: white;
+}
+
+.name, .role {
+  text-align: center; /* Asegura que el texto se vea centrado */
+  margin: 4px 0;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.role {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+/* 3. Centrar el contenedor de la lista */
+ion-list {
+  width: 100%; // Opcional: define un ancho máximo para no estirar demasiado
+  max-width: 400px; // Limita el ancho de la lista en pantallas grandes
+  background: transparent; // Para que no tape el fondo del ion-content
+  padding: 0;
+}

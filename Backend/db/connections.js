@@ -1,25 +1,29 @@
 const mysql = require('mysql2');
 require('dotenv').config();
 
-const dbReader = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
+const createDbPool = (user, password) => {
+    const pool = mysql.createPool({
+        host: process.env.DB_HOST,
+        user: user,
+        password: password,
+        database: process.env.DB_NAME,
+        port: 3306,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0,
+        charset: 'utf8mb4'
+    });
 
-const dbWriter = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_WRITER_USER,
-    password: process.env.DB_WRITER_PASSWORD,
-    database: process.env.DB_NAME
-});
+    // Evitar que el backend se caiga si se pierde conexión
+    pool.on('error', (err) => {
+        console.error('Error en el pool de base de datos:', err);
+    });
 
-const dbAdmin = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_ADMIN_USER,
-    password: process.env.DB_ADMIN_PASSWORD,
-    database: process.env.DB_NAME
-});
+    return pool;
+};
+
+const dbReader = createDbPool(process.env.DB_USER, process.env.DB_PASSWORD);
+const dbWriter = createDbPool(process.env.DB_WRITER_USER, process.env.DB_WRITER_PASSWORD);
+const dbAdmin = createDbPool(process.env.DB_ADMIN_USER, process.env.DB_ADMIN_PASSWORD);
 
 module.exports = { dbReader, dbWriter, dbAdmin };

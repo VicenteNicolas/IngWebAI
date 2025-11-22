@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Perfil Admin</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="avatar admin">
+    <ion-icon name="shield-checkmark-outline"></ion-icon>
+  </div>
+
+  <h2 class="name">{{ username }}</h2>
+  <p class="role">Administrador</p>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-note slot="end">admin@admin.cl</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Región</ion-label>
+      <ion-note slot="end">Sin datos</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Comuna</ion-label>
+      <ion-note slot="end">Sin datos</ion-note>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

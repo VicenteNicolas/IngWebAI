@@ -1,9 +1,18 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service'; 
+import { 
+  IonHeader, 
+  IonToolbar, 
+  IonTitle, 
+  IonContent, 
+  IonItem, 
+  IonInput, 
+  IonButton,
+  IonLabel 
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +20,13 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [
-    IonicModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonItem,
+    IonInput,
+    IonButton,
     FormsModule,
     CommonModule,
     RouterModule,
@@ -46,8 +61,6 @@ export class LoginPage {
         next: data => {
           if (data.success && data.token) {
             this.router.navigate([data.role === 'admin' ? '/admin' : '/home']);
-            this.error = '';
-            this.mensaje = '';
           } else {
             this.error = data.message || 'Usuario o contraseña incorrectos';
           }

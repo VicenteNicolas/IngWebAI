@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AdminGuard } from './guards/admin-guard';
 import { AuthGuard } from './guards/auth-guard';
 
@@ -27,6 +26,17 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/admin/admin.page').then( m => m.AdminPage),
     canActivate: [AdminGuard]
   },
-  
+
+  {
+    path: 'perfil-user',
+    loadComponent: () => import('./pages/perfil-user/perfil-user.page').then(m => m.PerfilUserPage),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'perfil-admin',
+    loadComponent: () => import('./pages/perfil-admin/perfil-admin.page').then(m => m.PerfilAdminPage),
+    canActivate: [AdminGuard]
+  },
 ];
+
 

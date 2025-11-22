@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # --- SERVICIO DE BASE DE DATOS ---
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: miappdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./Backend/db_init:/docker-entrypoint-initdb.d
+
+  # --- SERVICIO BACKEND ---
+  backend:
+    build: ./backend
+    container_name: backend_app
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db 
+    environment:
+      DB_HOST: db
+      DB_NAME: miappdb
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_WRITER_USER: app_writer
+      DB_WRITER_PASSWORD: password
+      DB_ADMIN_USER: root
+      DB_ADMIN_PASSWORD: root
+      JWT_SECRET: mi_secreto_super_seguro
+
+  # --- SERVICIO FRONTEND ---
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    container_name: frontend_app
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

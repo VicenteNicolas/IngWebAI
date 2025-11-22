@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -7,6 +6,22 @@ import { AuthService } from '../../services/auth.service';
 import { LocationService } from '../../services/location.service';  
 import { RegisterRequest } from '../../models/user.model';
 import { Region, Comuna } from '../../models/location.model';  
+import { 
+  IonHeader, 
+  IonToolbar, 
+  IonTitle, 
+  IonContent, 
+  IonItem, 
+  IonInput, 
+  IonButton,
+  IonLabel,
+  IonList,
+  IonSelect,
+  IonSelectOption,
+  IonCheckbox,
+  IonText,
+  IonSpinner 
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +29,20 @@ import { Region, Comuna } from '../../models/location.model';
   styleUrls: ['./register.page.scss'],
   standalone: true,
   imports: [
-    IonicModule,
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonContent, 
+    IonItem, 
+    IonInput, 
+    IonButton,
+    IonLabel,
+    IonList,
+    IonSelect,
+    IonSelectOption,
+    IonCheckbox,
+    IonText,
+    IonSpinner, 
     FormsModule,
     CommonModule,
     RouterModule,

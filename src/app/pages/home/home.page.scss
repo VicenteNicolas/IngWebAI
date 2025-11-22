@@ -1,41 +1,168 @@
-.title {
-  font-weight: bold;
-  margin: 16px 0;
-  text-align: center;
-}
-
-ion-card {
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.card-container {
+// Hero Section con imagen de fondo
+.hero-section {
+  height: 300px;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80') center/cover;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.img-placeholder {
-  width: 100px;
-  height: 100px;
-  background: #f0f0f0;
-  border-radius: 6px;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
 }
 
-.info {
-  flex: 1;
+.hero-overlay {
+  text-align: center;
+  color: white;
+  padding: 20px;
+  z-index: 1;
 }
 
-.info h3 {
-  margin: 0 0 4px 0;
+.hero-title {
+  font-size: 2rem;
   font-weight: bold;
+  margin: 0 0 12px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-ul {
-  padding-left: 20px;
-  margin: 4px 0 12px 0;
+.hero-subtitle {
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 0.95;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+// Sección de bienvenida
+.welcome-section {
+  padding: 20px 16px 10px;
+  
+  h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+  }
+  
+  .subtitle {
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 0.95rem;
+  }
+}
+
+// Contenedor de instalaciones
+.instalaciones-container {
+  padding: 0 16px 20px;
+}
+
+// Cards mejoradas
+.instalacion-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.card-image {
+  height: 140px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .facility-icon {
+    font-size: 64px;
+    color: white;
+    opacity: 0.9;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  
+  h3 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--ion-color-dark);
+  }
+  
+  ion-badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+}
+
+.detalles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  
+  li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--ion-color-medium);
+    
+    .check-icon {
+      color: var(--ion-color-success);
+      margin-right: 8px;
+      margin-top: 2px;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.book-button {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --border-radius: 12px;
+  font-weight: 600;
+  text-transform: none;
+  height: 44px;
+  
+  ion-icon {
+    margin-right: 8px;
+  }
+}
+
+// Estilo del círculo del usuario
+ion-button.perfil-circulo {
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 35px;
+  height: 35px;
+  background: #d9534f;
+  border-radius: 50%;
+  color: white;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+// Responsive design
+@media (min-width: 768px) {
+  .hero-section {
+    height: 400px;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .instalaciones-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+  }
 }
